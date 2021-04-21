@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        {{ totalPriceMethods() }}
+        {{ totalPriceMethods() }}
+        {{ totalPrice }}
+        {{ totalPrice }}
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+                price: 100,
+                number: 2
+            }
+        },
+        methods: {
+            totalPriceMethods(){
+                console.log("methodsです")
+                return this.price * this.number
+            }
+        },
+        //computedはデータの値が変わるたびに呼ばれる
+        computed: {
+            totalPrice(){
+                console.log("computedです")
+                return this.price * this.number
+            }
+            //(totalPrice: (app) => app.number * app.price でも可能)
+        }
+    })
+    </script>
+</body>
+</html>

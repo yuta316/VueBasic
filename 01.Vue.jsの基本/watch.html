@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+                price: 200,
+                number: 4,
+                books:[
+                    {
+                        id:1,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '450'
+                    },
+                    {
+                        id:2,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '1300'
+                    },
+                    {
+                        id:3,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '2000'
+                    }
+                ],
+                computed: {
+                    totalPrice: app => app.number + app.price
+                },
+                watch: {
+                    books: {
+                        handler: function(){
+                            console.log('変更されました')
+                        },
+                        deep: true,
+                    }
+                }
+            }
+        }
+    })
+    </script>
+</body>
+</html>

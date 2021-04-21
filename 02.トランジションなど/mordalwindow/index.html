@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <button @click="isShow = !isShow">画像を見る</button>
+        <transition name="fade">
+            <div v-show="isShow">
+                <div class="mordal__inner">
+                    <div class="mordal__clase" @click="isShow = !isShow">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <img src="fish.jpg">
+                </div>
+                <div class="mordal__background" @click="isShow = !isShow"></div>
+            </div>
+        </transition>
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+                isShow: false,
+            }
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        //v-on
+        <button v-on:click="btnClicked">クリック</button>
+        <button @click="btnClicked">クリック</button>
+        <br>
+
+        //イベントオブジェクト
+        <button @click="btnClickedEvent">クリック</button>
+        <br>
+        //イベントオブジェクト(引数のみ)
+        <button @click="btnClickedArgs(1)">クリック</button>
+        <br>
+        //イベントオブジェクト(引数とイベント両方)
+        <button @click="btnClickedArgsEvent('hello', $event)">クリック</button>
+
+        //preventDefault(Ajax)
+        <button @click.stop.prevent="btnClicked">Prevent</button>
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+
+            }
+        },
+        methods: {
+            btnClicked(){
+                console.log("clicked!!")
+            },
+            btnClickedEvent(e){
+                console.log(e)
+            },
+            btnClickedArgs(e){
+                console.log(e)
+            },
+            btnClickedArgsEvent(args,e){
+                console.log(args,e)
+            },
+        }
+    })
+    </script>
+</body>
+</html>

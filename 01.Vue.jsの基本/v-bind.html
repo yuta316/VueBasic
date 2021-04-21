@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            border: 1px solid red;
+        }
+        .text-danger {
+            color: red;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        //v-bind
+        <div v-show="isDisplay">表示</div>
+        <div v-show="!isDisplay">非表示</div>
+
+        //v-if
+        <div v-if="signal === 'red'">赤</div>
+        <div v-else-if="signal === 'blue'">青</div>
+        <div v-else-if="signal === 'yellow'">黄</div>
+        <div v-else>どれでもないです。</div>
+
+        //v-for
+        //配列
+        <ul>
+            <li v-for="(member, index) in membars">
+                {{ index }}番目:{{ member }}
+            </li>
+        </ul>
+
+        //オブジェクト
+        <ul>
+            <li v-for="(value, key, index) in book">
+                {{ index }}: {{ key }} = {{ value }}
+            </li>
+        </ul>
+
+        //複数オブジェクト
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th><th>タイトル</th><th>著者</th><th>価格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="book in books" :key="book.id">
+                    <td>    {{book.id}}     </td>
+                    <td>    {{book.title}}  </td>
+                    <td>    {{book.author}} </td>
+                    <td>    {{book.price}}  </td>
+                </tr>
+            </tbody>
+        </table>
+
+        //v-text
+        <div v-text="test"></div>
+        <div v-html="test"></div>
+
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+                //v-show
+                isDisplay: true,
+                //v-if
+                signal: "red",
+                //v-for
+                membars: ['a','b','c'],
+                book: {
+                    title:'タイトル',
+                    author:'著者',
+                    price: '価格'
+                },
+                books:[
+                    {
+                        id:1,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '450'
+                    },
+                    {
+                        id:2,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '1300'
+                    },
+                    {
+                        id:3,
+                        title:'タイトル',
+                        author:'著者',
+                        price: '2000'
+                    }
+                ],
+                test: 'aaa<br>bbb'
+            }
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            border: 1px solid red;
+        }
+        .text-danger {
+            color: red;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        <!--v-bind-->
+        <a :href="google">グーグル</a>
+        <a :href="book.url">{{ book.title }}</a>
+        
+        <!--v-bindにオブジェクトそのもので指定できる-->
+        <input v-bind="formInput">
+
+        <!--cssのstyleやclassも変更可能-->
+        <div :style="{fontSize:fontSize}">styleテスト</div>
+        <div :class="{active:isActive}">classテスト</div>
+
+    </div>
+    <script>
+    //DOMはHTMLをプログラムで操作できる仕組み。Document Object Model.
+    let app = new Vue({
+        //仮装DOMの範囲
+        el: '#app',
+        data(){
+            return {
+                message: 'Hello Vue !',
+                google: 'https://google.com',
+                book: {
+                    title: "タイトル",
+                    url: 'https://google.com',
+                },
+                formInput: {
+                    name: 'Your name',
+                    placeholder: 'input name'
+                },
+                //キャメルケースで指定
+                fontSize: '20px',
+                isActive: true,
+            }
+        }
+    })
+    </script>
+</body>
+</html>
