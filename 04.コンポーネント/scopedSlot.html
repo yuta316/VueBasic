@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+        .parent{
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .child{
+            width: 30%;
+            margin: 0 auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id ="app" class="parent">
+        <!--スコープで子のdataやmethodを親側で設定できる-->
+        <!--親側：v-slotの値として名前を指定して受け取る-->
+       <my-com class="child">
+           <template v-slot:default="plyer">
+               {{plyer}}
+           </template>
+
+       </my-com>
+       
+    </div>
+    <script>
+        //子側:dataをslotとv-bindで紐付け
+        let myCom = {
+            data(){
+                return{
+                    member: {
+                        name: "yuta",
+                        height: 174,
+                        hobby: "baseball"
+                    }
+                }
+            },
+            //dataをslotとv-bindで紐付け
+            template: `<div>
+                    <slot :member="member">ここが差し変わる
+                    </slot>
+            </div>`
+        }
+
+        let app = new Vue({
+            el:"#app",
+            data(){
+                return {
+                    
+                }
+            },
+            components: {
+                myCom
+            }
+        })
+    </script>
+</body>
+</html>
