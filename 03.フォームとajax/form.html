@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <!--inputとv-bind-->
+        <p v-if="errors.length">
+            <ul>
+                <li class="error" v-for="error in errors" :key="error">
+                    {{error}}
+                </li>
+            </ul>
+        </p>
+
+        <form>
+            <input :value="test"
+                @input="test = $event.target.value">
+            {{ test }}
+        </form>
+        <!--v-model-->
+        <form @submit.prevent="validate">
+            氏名
+            <input type="text" v-model="yourName">
+        
+            <br>
+            {{ contact.yourName.length}} /20
+            <p v-show="hasError.yourName">名前は20文字以内で記入してください</p>
+            <br>
+            電話番号
+            <!--v-model.numberで自動型変換-->
+            <input type="tel" v-model.number="contact.tel">
+            <br>
+            メール
+            <!--v-model.lazyでフォーカスが外れたら反映-->
+            <!--v-model.trimで空白削除-->
+            <input type="email" v-model.lazy.trim="contact.email">
+            <br>
+            性別
+            <input type="radio" value="male" v-model="contact.gender">男性
+            <input type="radio" value="felame" v-model="contact.gender">女性
+            <input type="radio" value="age" v-model="contact.gender">その他
+            <br>
+            年齢
+            <select v-model="contact.age">
+                <!--iPhoneのエラーを防ぐためにdiabledが必要-->
+                <option disabled value="">年齢を選択してください</option>
+                <option>10~19</option>
+                <option>20~29</option>
+                <option>30~39</option>
+                <option>40~</option>
+            </select>
+            <br>
+            メッセージ
+            <textarea v-model="contact.message"></textarea>
+            <br>
+            このサイトを知った理由
+            <input type="checkbox" value="web" v-model="contact.attracts">web
+            <input type="checkbox" value="チラシ" v-model="contact.attracts">チラシ
+            <input type="checkbox" value="その他" v-model="contact.attracts">その他
+            <br>
+            注意事項に同意する
+            <input type="checkbox" v-model="contact.caution">
+            <br>
+            <input type="submit" value="送信">
+        </form>
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    test: '',
+                    contact: {
+                        yourName: '',
+                        tel: '',
+                        email: '',
+                        gender: '',
+                        age: '',
+                        message: '',
+                        attracts: [],
+                        caution: false,
+                    },
+                    errors: [],
+                    hasError: {
+                        yourName: false,
+                    }
+                }
+            },
+            methods:{
+                validate(){
+                    this.errors = []
+                    if(!this.contact.yourName){
+                        this.errors.push('名前を記入してください')
+                    }else if(this.contact.yourName.length > 20){
+                        this.errors.push('名前は20文字以内で記入してください')
+                    }
+                    if(!this.contact.gender){
+                        this.errors.push('性別を選択してください')
+                    }
+                    if(!this.contact.caution){
+                        this.errors.push('注意事項にチェックを入れてください')
+                    }
+                }
+            },
+            computed: {
+                yourName:{
+                    get(){
+                        return this.contact.yourName
+                    },
+                    set(value){
+                        console.log(value.length)
+                        if(value.length <= 20){
+                            this.hasError.yourName = false
+                        }else{
+                            console.log(this.hasError.yourName)
+                            this.hasError.yourName = true
+                        }
+                        return this.contact.yourName = value
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
