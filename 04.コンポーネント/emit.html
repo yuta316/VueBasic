@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+        .parent{
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .child{
+            width: 30%;
+            margin: 0 auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    emitで子から親にデータを通知する
+    手順としては、
+        1.子側でボタンが押され(@click)、childMethodが動く
+        2.custom-eventが親側にemitされる
+        3.親側でcustom-eventが起こるため、paretnMehtodが動く
+            emitの第二引数のデータを引数eで受け取ることができる
+    -->
+    
+    <div id ="app" class="parent">
+        <emit-test
+            @custom-event="parentMethod"
+            class="child">
+        </emit-test>
+    </div>
+    <script>
+        //子側
+        let emitTest = {
+            template: `<div>
+            <button @click="childMethod">子側のボタン</button>
+            </div>`,
+            methods:{
+                childMethod(){
+                    //イベント名はケバブケース
+                    this.$emit('custom-event', '子の値')
+                }
+            }
+        }
+
+        let app = new Vue({
+            el:"#app",
+            //コンポーネントの読み込み
+            components: {
+                emitTest
+            },
+            data(){
+                return {
+                }
+            },
+            methods:{
+                //子からイベントを受け取ったら実行されるメソッド
+                //引数eで子側から送られてきたデータ受け取れる
+                parentMethod(e){
+                    console.log(e)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
