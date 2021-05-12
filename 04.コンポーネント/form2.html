@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+        .parent{
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .child{
+            width: 30%;
+            margin: 0 auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id ="app"　class="parent">
+        <!--子の方でv-modelを使う-->
+        <custom-input
+            class="child"
+            @child-event="parentValue = $event"
+        ></custom-input>
+        {{parentValue}}
+    </div>
+    <script>
+        //子コンポーネンt
+        let customInput = {
+            //テンプレート
+            //子の方でv-modelを使用する
+            template: `<div>
+                <input type="text" v-model="childParam">
+            </div>`,
+            data(){
+                return{
+                    //computed使うためにdataが必要
+                    childValue: ''
+                }
+            },
+            computed:{
+                //監視したいプロパティ名
+                childParam:{
+                    get(){
+                        //getにはreturnが必要
+                        return this.childValue
+                    },
+                    //引数に新しい値が入る
+                    set(value){
+                        this.childValue = value
+                        //続けて親へデータを渡す(emit)
+                        //イベント名はケバブ
+                        this.$emit("child-event", value)
+                    }
+                }
+            }
+        }
+
+        let app = new Vue({
+            el:"#app",
+            components:{
+                customInput
+            },
+            data(){
+                return {
+                    parentValue: '',
+                }
+            }
+        })
+    </script>
+</body>
+</html>

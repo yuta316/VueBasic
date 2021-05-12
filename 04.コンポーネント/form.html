@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+        .parent{
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .child{
+            width: 30%;
+            margin: 0 auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id ="app"　class="parent">
+        <!--valueがformの値、@inputでトリガーとなる-->
+        <!--親の方でv-modelを使う場合、v-model="paretnValue" でも可 -->
+        <custom-input
+            :value = "paretnValue"
+            @input="paretnValue = $event"
+            class="child"
+        ></custom-input>
+        {{paretnValue}}
+    </div>
+    <script>
+        //子コンポーネンt
+        let customInput = {
+            //親からのデータを受け取る
+            props: {
+                value: {
+                    type: String
+                }
+            },
+            //テンプレート
+            //valueは親からのデータ
+            //入力されるとchildEventが発生する
+            template: `<div>
+                <input :value="value" @input="childEvent">
+            </div>`,
+            methods: {
+                //eでイベントの情報を受け取る
+                childEvent(e){
+                    //イベント名inputで発生した値を親に送る
+                    this.$emit('input', e.target.value)
+                }
+            }
+        }
+
+        let app = new Vue({
+            el:"#app",
+            components:{
+                customInput
+            },
+            data(){
+                return {
+                    paretnValue: '',
+                }
+            }
+        })
+    </script>
+</body>
+</html>
