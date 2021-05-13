@@ -1,0 +1,49 @@
+<template>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <!--
+        router-linkのprops
+          ->to: リンク先
+            tag: defaultはaタグ
+      -->
+      <!--本一覧ページへ飛ばすrouteを追加-->
+      <router-link to="/book">BooKList</router-link> |
+      <router-link to="/item/1">Item</router-link> |
+      <router-link to="/user/profile">User</router-link>
+    </div>
+    <!--ルートの入れ子-->
+    <div class="blue-b">
+    <router-view/>
+    </div>
+    <!--複数のrouter-view-->
+    <router-view name="sub"/>
+  </div>
+</template>
+
+<style>
+.blue-b{
+  border: 1px solid blue;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
